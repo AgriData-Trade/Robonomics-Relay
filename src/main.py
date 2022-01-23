@@ -24,7 +24,7 @@ logger = logging.getLogger("AgriData Relay")
 async def subscribe(
     config: Config, data: dict[str, DataItem], database: Optional[Database] = None
 ):
-    async with Client("agridata.darkflame.dev") as client:
+    async with Client(config.mqtt_url) as client:
         logger.info("Connected to MQTT broker")
         async with client.filtered_messages("sensors/#") as messages:
             logger.info("Subscribed to sensors")
