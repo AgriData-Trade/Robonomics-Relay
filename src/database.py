@@ -44,21 +44,22 @@ class Database:
     def insert_data(self, data: DataItem, hash: str) -> None:
         self.cursor.execute(
             """
-            INSERT INTO data (
-                node_id,
+            INSERT INTO agridata."Log"(
+	            node_id,
                 hash,
+                nitrate,
                 battery_voltage,
-                clockBattery_voltage,
-                temperature_celsius,
-                nitrate_mg_P_L,
-                nitrate_mV,
-                speciicConductivity_mS_P_cm,
-                salinity_psu,
-                totalDissolvedSolids_g_P_L,
-                rawCoductivity_uS_P_cm,
-                pH_units,
-                pH_mV,
-                referece_mV
+                "clockBattery_voltage", 
+                temperature_celsius, 
+                "nitrate_mg_P_L", 
+                "nitrate_mV", 
+                "speciicConductivity_mS_P_cm", 
+                salinity_psu, 
+                "totalDissolvedSolids_g_P_L", 
+                "rawCoductivity_uS_P_cm", 
+                "pH_units", 
+                "pH_mV", 
+                "referece_mV"
             ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """,
             data.sensor_id,
