@@ -45,8 +45,7 @@ class Database:
         self.cursor.execute(
             """
             INSERT INTO data (
-                timestamp,
-                sensor_id,
+                node_id,
                 hash,
                 battery_voltage,
                 clockBattery_voltage,
@@ -63,7 +62,6 @@ class Database:
             ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """,
             data.sensor_id,
-            datetime.now(),
             hash,
             data.battery_voltage,
             data.clockBattery_voltage,

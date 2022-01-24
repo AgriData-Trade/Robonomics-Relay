@@ -83,7 +83,6 @@ async def subscribe(
 async def main():
     config = Config()
     # database = Database(config.database_url)
-    database = None
     data: dict[str, DataItem] = {}
     while True:
         try:
