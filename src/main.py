@@ -1,4 +1,5 @@
 from typing import Optional
+
 from config import Config
 from database import Database
 from utils import send_data
@@ -87,6 +88,9 @@ async def main():
     while True:
         try:
             await subscribe(config, data)
+        except TimeoutError:
+            # just mqtt timeout
+            pass
         except Exception as e:
             logger.exception(e)
             await asyncio.sleep(10)
