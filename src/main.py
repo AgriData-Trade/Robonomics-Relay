@@ -83,11 +83,11 @@ async def subscribe(
 
 async def main():
     config = Config()
-    # database = Database(config.database_url)
+    database = Database(config.database_url)
     data: dict[str, DataItem] = {}
     while True:
         try:
-            await subscribe(config, data)
+            await subscribe(config, data, database)
         except TimeoutError:
             # just mqtt timeout
             pass
