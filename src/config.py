@@ -1,7 +1,10 @@
 from os import environ
 from substrateinterface import Keypair
+import logging
 
 __all__ = "Config"
+
+logger = logging.getLogger("AgriData Relay/Config")
 
 
 class Config:
@@ -13,3 +16,4 @@ class Config:
         self.seed = self.keypair.seed_hex
         self.database_url = environ.get("DATABASE_URL")
         self.mqtt_url = environ.get("MQTT_URL")
+        logger.info(f"Config: {self.__dict__}")
