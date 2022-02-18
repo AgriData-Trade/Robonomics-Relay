@@ -9,12 +9,10 @@ logger = logging.getLogger("AgriData Relay/Database")
 
 @dataclass
 class DataItem:
-    battery_voltage: float
-    clockBattery_voltage: float
-    temperature_celsius: float
+    temperature_kelvin: float
     nitrate_mg_P_L: float
     nitrate_mV: float
-    speciicConductivity_mS_P_cm: float
+    speciifcConductivity_mS_P_cm: float
     salinity_psu: float
     totalDissolvedSolids_g_P_L: float
     rawCoductivity_uS_P_cm: float
@@ -48,12 +46,10 @@ class Database:
 	            node_id,
                 hash,
                 nitrate,
-                battery_voltage,
-                "clockBattery_voltage", 
-                temperature_celsius, 
+                temperature_kelvin, 
                 "nitrate_mg_P_L", 
                 "nitrate_mV", 
-                "speciicConductivity_mS_P_cm", 
+                "specificConductivity_mS_P_cm", 
                 salinity_psu, 
                 "totalDissolvedSolids_g_P_L", 
                 "rawCoductivity_uS_P_cm", 
@@ -64,12 +60,10 @@ class Database:
             """,
             data.sensor_id,
             hash,
-            data.battery_voltage,
-            data.clockBattery_voltage,
             data.temperature_celsius,
             data.nitrate_mg_P_L,
             data.nitrate_mV,
-            data.speciicConductivity_mS_P_cm,
+            data.specificConductivity_mS_P_cm,
             data.salinity_psu,
             data.totalDissolvedSolids_g_P_L,
             data.rawCoductivity_uS_P_cm,

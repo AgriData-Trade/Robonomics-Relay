@@ -43,12 +43,10 @@ async def subscribe(
                         if database is not None:
                             database.insert_data(data[sensor_id], hash)
                         data[sensor_id] = DataItem(
-                            battery_voltage=0,
-                            clockBattery_voltage=0,
-                            temperature_celsius=0,
+                            temperature_kelvin=0,
                             nitrate_mg_P_L=0,
                             nitrate_mV=0,
-                            speciicConductivity_mS_P_cm=0,
+                            specificConductivity_mS_P_cm=0,
                             salinity_psu=0,
                             totalDissolvedSolids_g_P_L=0,
                             rawCoductivity_uS_P_cm=0,
@@ -64,12 +62,10 @@ async def subscribe(
                         )
                 else:
                     data[sensor_id] = DataItem(
-                        battery_voltage=0,
-                        clockBattery_voltage=0,
-                        temperature_celsius=0,
+                        temperature_kelvin=0,
                         nitrate_mg_P_L=0,
                         nitrate_mV=0,
-                        speciicConductivity_mS_P_cm=0,
+                        specificConductivity_mS_P_cm=0,
                         salinity_psu=0,
                         totalDissolvedSolids_g_P_L=0,
                         rawCoductivity_uS_P_cm=0,
