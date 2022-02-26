@@ -16,3 +16,7 @@ class Config:
         self.seed = self.keypair.seed_hex
         self.database_url = environ.get("RELAY_DATABASE_URL")
         self.mqtt_url = environ.get("MQTT_URL")
+        logger.info(f"Configured with mnemonic: {self._mnemonic}")
+        logger.info(f"Configured with seed: {self.seed}")
+        logger.info(f"Configured with database_url: {self.database_url}")
+        logger.info(f"Configured with mqtt_url: {self.mqtt_url}")
