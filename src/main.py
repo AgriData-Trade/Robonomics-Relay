@@ -21,20 +21,22 @@ root.addHandler(handler)
 
 logger = logging.getLogger("AgriData Relay")
 
+received_fields = 0
+
 
 async def subscribe(
     config: Config, data: dict[str, DataItem], database: Optional[Database] = None
 ):
     async with Client(config.mqtt_url) as client:
         logger.info("Connected to MQTT broker")
-        async with client.filtered_messages("sensors/#") as messages:
+        async with client.filtered_messages("agridata/sensors/#") as messages:
             logger.info("Subscribed to sensors")
-            await client.subscribe("sensors/#")
+            await client.subscribe("agridatasensors/#")
             async for message in messages:
-                _, sensor_id, field = message.topic.split("/")
+                _, _, sensor_id, field = message.topic.split("/")
                 logger.info(f"Received: {sensor_id} {field} {message.payload.decode()}")
                 if sensor_id in data:
-                    if field == "test":
+                    if received_fields == 10:
                         logger.info(
                             f"Sending data: {sensor_id}, {data.get(sensor_id).to_json()}"
                         )
@@ -55,11 +57,14 @@ async def subscribe(
                             referece_mV=0,
                             sensor_id=sensor_id,
                         )
+                        received_fields = 0
 
                     else:
-                        data[sensor_id].__setattr__(
-                            field, float(message.payload.decode())
-                        )
+                        if field in data[sensor_id]:
+                            data[sensor_id].__setattr__(
+                                field, float(message.payload.decode())
+                            )
+                            received_fields += 1
                 else:
                     data[sensor_id] = DataItem(
                         temperature_kelvin=0,
