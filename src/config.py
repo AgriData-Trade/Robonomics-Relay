@@ -14,7 +14,7 @@ class Config:
         self._mnemonic = environ.get("MNEMONIC_SEED")
         logger.info(f"Configured with mnemonic: {self._mnemonic}")
         self.keypair = Keypair.create_from_mnemonic(self._mnemonic, ss58_format=32)
-        logger.info(f"Configured with keypair: {self.seed}")
+        logger.info(f"Configured with keypair: {self.keypair}")
         self.seed = self.keypair.seed_hex
         logger.info(f"Configured with seed: {self.seed}")
         self.database_url = environ.get("RELAY_DATABASE_URL")
