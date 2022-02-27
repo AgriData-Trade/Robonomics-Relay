@@ -1,3 +1,4 @@
+from time import sleep
 from typing import Optional
 
 from config import Config
@@ -84,7 +85,16 @@ async def subscribe(
 
 async def main():
     config = Config()
-    database = Database(config.database_url)
+    database = None
+    if config.database_url is not None:
+        while database is None:
+            try:
+                database = Database(config.database_url)
+            except Exception as e:
+                logger.error(f"Could not connect to database: {e}")
+                logger.info("Retrying in 5 seconds")
+                sleep(5)
+
     data: dict[str, DataItem] = {}
     while True:
         try:
