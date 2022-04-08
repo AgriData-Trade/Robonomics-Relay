@@ -86,14 +86,15 @@ async def subscribe(
 async def main():
     config = Config()
     database = None
-    if config.database_url is not None:
+    if config.enable_db:
         while database is None:
             try:
-                database = Database(config.database_url)
+                database = Database(config.database)
             except Exception as e:
                 logger.error(f"Could not connect to database: {e}")
                 logger.info("Retrying in 5 seconds")
                 sleep(5)
+        logger.info("Connected to database")
 
     data: dict[str, DataItem] = {}
     while True:

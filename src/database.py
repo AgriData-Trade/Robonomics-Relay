@@ -3,6 +3,7 @@ import psycopg2
 import json
 from dataclasses import dataclass
 import logging
+from config import DatabaseConfig
 
 logger = logging.getLogger("AgriData Relay/Database")
 
@@ -31,13 +32,9 @@ class DataItem:
 
 
 class Database:
-    def __init__(self, database: str) -> None:
-        self.conn = psycopg2.connect(database)
+    def __init__(self, database: DatabaseConfig) -> None:
+        self.conn = psycopg2.connect(user=database.user, password=database.password, dbname=database.db, host=database.host, port=database.port)
         self.cursor = self.conn.cursor()
-        logger.info("Connected to database")
-
-    def __del__(self) -> None:
-        self.conn.close()
 
     def insert_data(self, data: DataItem, hash: str) -> None:
         self.cursor.execute(
