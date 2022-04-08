@@ -30,9 +30,9 @@ async def subscribe(
 ):
     async with Client(config.mqtt_url) as client:
         logger.info("Connected to MQTT broker")
+        await client.subscribe("agridata/sensors/#")
         async with client.filtered_messages("agridata/sensors/#") as messages:
             logger.info("Subscribed to sensors")
-            await client.subscribe("agridata/sensors/#")
             async for message in messages:
                 _, _, sensor_id, field = message.topic.split("/")
                 logger.info(f"Received: {sensor_id} {field} {message.payload.decode()}")
