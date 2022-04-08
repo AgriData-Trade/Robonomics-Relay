@@ -32,7 +32,7 @@ async def subscribe(
         logger.info("Connected to MQTT broker")
         async with client.filtered_messages("agridata/sensors/#") as messages:
             logger.info("Subscribed to sensors")
-            await client.subscribe("agridatasensors/#")
+            await client.subscribe("agridata/sensors/#")
             async for message in messages:
                 _, _, sensor_id, field = message.topic.split("/")
                 logger.info(f"Received: {sensor_id} {field} {message.payload.decode()}")
@@ -58,14 +58,6 @@ async def subscribe(
                             referece_mV=0,
                             sensor_id=sensor_id,
                         )
-                        received_fields = 0
-
-                    else:
-                        if field in data[sensor_id]:
-                            data[sensor_id].__setattr__(
-                                field, float(message.payload.decode())
-                            )
-                            received_fields += 1
                 else:
                     data[sensor_id] = DataItem(
                         temperature_kelvin=0,
