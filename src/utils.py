@@ -1,9 +1,8 @@
 from substrateinterface import SubstrateInterface
-import nacl.secret
 import base64
 from config import Config
-from database import DataItem
 import base64
+import json
 
 
 def connect_robonomics() -> SubstrateInterface:
@@ -54,9 +53,9 @@ def decrypt(seed: str, encrypted_data: str) -> str:
     return decrypted
 
 
-def send_data(data: DataItem, config: Config) -> str | None:
+def send_data(data: str, config: Config) -> str | None:
     substrate = connect_robonomics()
-    text = encrypt(config.seed, data.to_json())
+    text = encrypt(config.seed, json.dumps(json.loads(data)))
 
     call = substrate.compose_call(
         call_module="Datalog", call_function="record", call_params={"record": text}
