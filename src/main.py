@@ -30,7 +30,6 @@ async def subscribe(
         await client.subscribe("agridata/sensors/#")
         async with client.filtered_messages("#") as messages:
             logger.info("Subscribed to sensors")
-            await client.subscribe("agridata/sensors/#")
             async for message in messages:
                 _, _, sensor_id = message.topic.split("/")
                 logger.info(f"Relaying data: {sensor_id}, {message.payload.decode()}")
