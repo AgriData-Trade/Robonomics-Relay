@@ -1,3 +1,4 @@
+import json
 from typing import Optional
 
 from config import Config
@@ -33,7 +34,9 @@ async def subscribe(
             async for message in messages:
                 _, _, sensor_id = message.topic.split("/")
                 logger.info(f"Relaying data: {sensor_id}, {message.payload.decode()}")
-                hash = send_data(message.payload.decode(), config)
+                data = json.loads(message.payload.decode())
+                data["sensor_id"] = sensor_id
+                hash = send_data(json.dumps(data), config)
                 logger.info(f"Sent data: {hash}")
 
 
