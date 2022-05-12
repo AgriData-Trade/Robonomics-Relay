@@ -33,10 +33,13 @@ async def subscribe(
             logger.info("Subscribed to sensors")
             async for message in messages:
                 _, _, sensor_id = message.topic.split("/")
+                if sensor_id not in config.nodes:
+                    logger.info(f"Unknown sensor {sensor_id}")
+                    continue
                 logger.info(f"Relaying data: {sensor_id}, {message.payload.decode()}")
                 data = json.loads(message.payload.decode())
                 data["sensor_id"] = sensor_id
-                hash = send_data(json.dumps(data), config)
+                hash = send_data(json.dumps(data), config.nodes[sensor_id])
                 logger.info(f"Sent data: {hash}")
 
 

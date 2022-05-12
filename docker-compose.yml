@@ -4,6 +4,8 @@ services:
   relay:
     build: .
     restart: always
+    volumes:
+      - ./config.json:/app/config.json
     env_file:
       - .env
 

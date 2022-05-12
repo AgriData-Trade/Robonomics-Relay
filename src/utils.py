@@ -1,6 +1,6 @@
 from substrateinterface import SubstrateInterface
 import base64
-from config import Config
+from config import Config, NodeConfig
 import base64
 
 
@@ -52,7 +52,7 @@ def decrypt(seed: str, encrypted_data: str) -> str:
     return decrypted
 
 
-def send_data(data: str, config: Config) -> str | None:
+def send_data(data: str, config: NodeConfig) -> str | None:
     substrate = connect_robonomics()
     text = encrypt(config.seed, data)
 
